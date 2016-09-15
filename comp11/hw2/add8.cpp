@@ -1,0 +1,45 @@
+//
+// add8.cpp
+// purpose: add 8 mubers together
+// by: James McCants
+// date: 9/17/13
+//
+
+#include <iostream>
+
+using namespace std;
+
+int main ()
+{
+  double input_num, sum = 0;
+    
+    cout << "Enter 8 numbers: ";
+    
+    cin >> input_num;
+    sum = input_num + sum; //1
+    
+    cin >> input_num;
+    sum = input_num + sum; //2
+
+    cin >> input_num;
+    sum = input_num + sum; //3
+
+    cin >> input_num;
+    sum = input_num + sum; //4
+
+    cin >> input_num;
+    sum = input_num + sum; //5
+
+    cin >> input_num;
+    sum = input_num + sum; //6
+
+    cin >> input_num;
+    sum = input_num + sum; //7
+
+    cin >> input_num;
+    sum = input_num + sum; //8
+
+    cout << "The sum is " << sum << endl;
+
+  return 0;
+}

@@ -1,0 +1,23 @@
+#include <iostream>
+#include <string> 
+
+#include "SongHash.h"
+
+using namespace std;
+
+int main(int argc, char *argv[])
+{
+        WordTable wordlist;
+	if (argc == 2) {
+		wordlist.read_lyrics(argv[1],false);
+                while (!wordlist.getEnd()) {
+                        wordlist.find();
+                }
+	}
+	else {
+		cout << "Usage: songsearch database.txt\n";
+	}
+
+        cout << "<END-OF-REPORT>" << endl;
+        return 0;
+}

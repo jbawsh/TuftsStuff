@@ -1,0 +1,3 @@
+r1 := 1
+r2 := r1 nand r1
+halt

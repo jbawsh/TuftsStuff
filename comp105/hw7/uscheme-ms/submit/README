@@ -1,0 +1,23 @@
+Comp105 hw7
+
+Garbage Collector
+
+James McCants and Aaron Bowen
+
+-I worked with Aaron Bowen
+
+-It took us 8 hours
+
+-No further comments
+
+-Here is a test case because it wouldn't take it in submit:
+
+(cons 1 '(2 3 4 5 6))
+(set it 1)
+(cons 1 '(2 3 4 5 6))
+(cons 1 '(2 3 4 5 6))
+
+this test demonstrated the addition of new pages when more memory
+was required. It also showed a disparity between live marks and 
+total available space, indicating that the garbage collector was in
+fact recycling space.

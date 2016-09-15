@@ -1,0 +1,26 @@
+HW9 README due 12/8/14
+by James McCants and Jun Soo Shin
+
+----- Help -----
+We have received help from Jacob Katsiaficas, Aaron Bowen, and several TA's.
+
+----- Implementation -----
+We believe everything has been implemented correctly, but there may be some
+edge cases we missed.
+
+We have not implemented printing the most negative number, 0x80000000.
+
+----- Departures from Convention -----
+We used a urt0 file for initialization but otherwise our files are the same
+using a callmain to initialize our program before running it.  
+
+----- Implementation of Print -----
+The print module divides the number by 10 and then multiplies it by 10 and then
+subtracts the new number from the old number and pushes the difference onto a
+stack and then divides it by 10 again; it does this until dividing by 10 leaves
+0 and then it prints out the stack which the results were pushed onto. 
+
+----- Hours Spent -----
+Analyzing: 2 hrs
+Writing Assembly Code: 10
+Debugging: 5

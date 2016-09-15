@@ -1,0 +1,9 @@
+Debug Report Lab 7
+
+James McCants
+
+1. The first bug was in dDA-1 schedule event. The program wasn't scheduling the
+ event if it was after all of the other events.
+
+2. Bug was in dDA-1 resizeList. They were missing the brackets before eventList
+when deleting it.

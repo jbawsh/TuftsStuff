@@ -1,0 +1,1 @@
+/comp/40/bin/umasm urt0.ums calc40.ums print.ums callmain.ums > calc40.um

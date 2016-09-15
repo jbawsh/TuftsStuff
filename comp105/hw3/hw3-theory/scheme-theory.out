@@ -1,0 +1,3 @@
+\BOOKMARK [1][-]{sec-problem-31.1}{Problem\04031}{}% 1
+\BOOKMARK [2][-]{sec-base-case-where-xs-is--.2}{Base\040case\040where\040xs\040is\040'\(\):}{sec-problem-31.1}% 2
+\BOOKMARK [2][-]{sec-induction-step-assume-that-xs-is-not-nil-xs-cons-y-ys-.2}{Induction\040step,\040assume\040that\040xs\040is\040not\040nil,\040xs\040=\040\(cons\040y\040ys\):}{sec-problem-31.1}% 3

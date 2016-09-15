@@ -1,0 +1,336 @@
+.zero r0
+.temps r6, r7
+//-----jump table init-----
+.section init
+jumptable:
+.space 256
+
+.section init
+         //for intialization
+         r1 := 0
+         r3 := 48
+
+init_jumptable_loop:
+        r5 := jumptable + r1
+        m[r0][r5] := input_error
+        r1 := r1 + 1
+        if (r1 != 256) goto init_jumptable_loop using r5
+
+init_digits_loop:
+        r5 := jumptable + r3
+        m[r0][r5] := digit
+        r3 := r3 + 1
+        if (r3 != 58) goto init_digits_loop using r5, r1
+
+//-----waiting-----
+.section text
+
+run:
+        push r1 on stack r2
+        push r3 on stack r2
+        push r4 on stack r2
+
+waiting:
+        r1 := input()
+
+waiting_with_character:
+        if (r1 == -1) goto finish_run using r3
+
+        //branch
+        r5 := jumptable + r1
+        r5 := m[r0][r5]
+        goto r5
+
+entering:
+        r1 := input()
+        r5 := jumptable + r1
+        if (m[r0][r5] != digit) goto waiting_with_character using r3, r4
+
+        pop r4 off stack r2
+        pop r3 off stack r4
+
+        r5 := 10
+        r3 := r3 * r5
+
+        r5 := 48
+        r1 := r1 - r5
+
+        r3 := r3 + r1
+
+        push r3 on stack r4
+        push r4 on stack r2
+
+        goto entering        
+
+finish_run:
+        pop r4 off stack r2
+        pop r3 off stack r2
+        pop r5 off stack r2
+
+        r1 := 0
+        goto end_prog
+
+//Specific Case Functions
+
+.section init
+         m[r0][jumptable + ' '] := waiting
+.section text
+
+.section init
+         m[r0][jumptable + '\n'] := newline
+.section text
+newline:
+        pop r4 off stack r2
+        goto print linking r1
+        push r4 on stack r2
+        goto waiting
+
+//ADDITION
+
+.section init
+         m[r0][jumptable + '+'] := add
+.section text
+add:
+        pop r4 off stack r2
+        if (r4 == val_stk) goto check_1 using r3
+        pop r1 off stack r4
+        if (r4 == val_stk) goto check_2 using r3
+        pop r5 off stack r4
+
+        r5 := r5 + r1
+
+        push r5 on stack r4
+        push r4 on stack r2
+        goto waiting
+
+//SUBTRACTION
+
+.section init
+         m[r0][jumptable + '-'] := sub
+.section text
+sub:
+        pop r4 off stack r2
+        if (r4 == val_stk) goto check_1 using r3
+        pop r1 off stack r4
+        if (r4 == val_stk) goto check_2 using r3
+        pop r5 off stack r4
+
+        r5 := r5 - r1
+
+        push r5 on stack r4
+        push r4 on stack r2
+        goto waiting
+
+//MULT
+
+.section init
+         m[r0][jumptable + '*'] := mul
+.section text
+mul:
+        pop r4 off stack r2
+        if (r4 == val_stk) goto check_1 using r3
+        pop r1 off stack r4
+        if (r4 == val_stk) goto check_2 using r3
+        pop r5 off stack r4
+
+        r5 := r5 * r1
+
+        push r5 on stack r4
+        push r4 on stack r2
+        goto waiting
+
+//DIV
+
+.section init
+         m[r0][jumptable + '/'] := div
+.section text
+div:
+        pop r4 off stack r2
+        if (r4 == val_stk) goto check_1 using r3
+        pop r1 off stack r4
+        if (r4 == val_stk) goto check_2 using r3
+        pop r5 off stack r4
+
+        //TODO CHECK IF Y IS 0
+
+        r5 := r5 / r1
+
+        push r5 on stack r4
+        push r4 on stack r2
+        goto waiting
+
+//OR
+
+.section init
+         m[r0][jumptable + '|'] := or
+.section text
+or:
+        pop r4 off stack r2
+        if (r4 == val_stk) goto check_1 using r3
+        pop r1 off stack r4
+        if (r4 == val_stk) goto check_2 using r3
+        pop r5 off stack r4
+
+        r5 := r5 | r1
+
+        push r5 on stack r4
+        push r4 on stack r2
+        goto waiting
+
+//AND
+
+.section init
+         m[r0][jumptable + '&'] := and
+.section text
+and:
+        pop r4 off stack r2
+        if (r4 == val_stk) goto check_1 using r3
+        pop r1 off stack r4
+        if (r4 == val_stk) goto check_2 using r3
+        pop r5 off stack r4
+
+        r5 := r5 & r1
+
+        push r5 on stack r4
+        push r4 on stack r2
+        goto waiting
+
+//NEG
+
+.section init
+         m[r0][jumptable + 'c'] := neg
+.section text
+neg:
+        pop r4 off stack r2
+        if (r4 == val_stk) goto check_only using r3
+        pop r1 off stack r4
+
+        r5 := -r1
+
+        push r5 on stack r4
+        push r4 on stack r2
+        goto waiting
+
+//NOT
+
+.section init
+         m[r0][jumptable + '~'] := not
+.section text
+not:
+        pop r4 off stack r2
+        if (r4 == val_stk) goto check_only using r3
+        pop r1 off stack r4
+
+        r5 := ~r1
+
+        push r5 on stack r4
+        push r4 on stack r2
+        goto waiting
+
+//SWAP
+
+.section init
+         m[r0][jumptable + 's'] := swap
+.section text
+swap:
+        pop r4 off stack r2
+        if (r4 == val_stk) goto check_1 using r3
+        pop r1 off stack r4
+        if (r4 == val_stk) goto check_2 using r3
+        pop r5 off stack r4
+
+        push r5 on stack r4
+        push r1 on stack r4
+
+        push r4 on stack r2
+        goto waiting
+
+//DUPL
+
+.section init
+         m[r0][jumptable + 'd'] := dupl
+.section text
+dupl:
+        pop r4 off stack r2
+        if (r4 == val_stk) goto check_only using r3
+        pop r1 off stack r4
+
+        push r1 on stack r4
+        push r1 on stack r4
+
+        push r4 on stack r2
+        goto waiting
+
+//POP
+
+.section init
+         m[r0][jumptable + 'p'] := pop_s
+.section text
+pop_s:
+        pop r4 off stack r2
+        if (r4 == val_stk) goto check_only using r3
+        pop r1 off stack r4
+
+        push r4 on stack r2
+        goto waiting
+
+//ZERO
+
+.section init
+         m[r0][jumptable + 'z'] := zero
+.section text
+zero:
+        pop r4 off stack r2
+        if (r4 == val_stk) goto zero_end using r3
+        goto zero_helper
+
+zero_helper:
+        pop r1 off stack r4
+        if (r4 != val_stk) goto zero_helper using r3
+        goto zero_end using r3
+
+zero_end:
+        push r4 on stack r2
+        goto waiting
+
+digit:
+        pop r4 off stack r2
+        
+        r5 := 48
+        r1 := r1 - r5
+        push r1 on stack r4
+
+        push r4 on stack r2
+        goto entering
+
+divide_by_zero:
+        push r1 on stack r4
+        push r4 on stack r2
+        output "Division by zero\n"
+        goto newline
+        goto waiting
+
+check_only:
+        push r4 on stack r2
+        output "Stack underflow---expected at least 1 element\n"
+        goto newline
+        goto waiting
+
+check_1:
+        push r4 on stack r2
+        output "Stack underflow---expected at least 2 elements\n"
+        goto newline
+        goto waiting
+
+check_2:
+        push r1 on stack r4
+        push r4 on stack r2
+        output "Stack underflow---expected at least 2 elements\n"
+        goto newline
+        goto waiting
+
+input_error:
+        output "Unknown character '"
+        output r1
+        output "'\n"
+

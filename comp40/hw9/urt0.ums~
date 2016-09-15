@@ -1,0 +1,14 @@
+.zero r0
+      .temps r6, r7
+      .section data
+      .space 100000
+      endstack:
+
+      .section data
+      .space 10000
+      val_stk:
+
+.section init
+         r0 := 0
+         r2 := endstack
+         r4 := val_stk

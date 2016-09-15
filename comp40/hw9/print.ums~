@@ -1,0 +1,90 @@
+.zero r0
+.temps r6, r7
+.section text
+
+print:
+        //output "in print\n"
+        push r1 on stack r2
+        r1 := 
+        push r1 on stack r2
+        goto check_empty
+
+check_empty:
+        //output "in check_empty\n"
+        if (r4 == val_stk) goto is_empty using r3
+
+        goto get_number
+        
+get_number:
+        //output "in get_number\n"
+        output ">>> "
+        pop r3 off stack r4
+        r5 := -1
+        push r5 on stack r4
+
+        push r3 on stack r2
+
+        r1 := 0
+        if (r3 <s r1) goto negative using r5
+
+        goto find_number
+
+negative:
+        output "-"
+        r3 := -r3
+        goto find_number
+
+output_number:
+        //output "in output_number\n"
+        r5 := -1
+        pop r1 off stack r4
+        
+        if (r1 == r5) goto new_line using r3
+        r5 := 48
+        r1 := r1 + r5
+        output r1
+        goto output_number
+
+new_line:
+        //output "in pop_one\n"
+        output "\n"
+        goto check_empty
+
+find_number:
+        //output "in find_number\n"
+        r5 := 10
+        r1 := r3 / r5
+        r5 := 0
+        if (r1 == r5) goto base_case using r5
+
+        r5 := 10
+        r1 := r1 * r5
+        r5 := r3 - r1
+        push r5 on stack r4
+        
+        r5 := 10
+        r3 := r1 / r5
+        goto find_number
+
+base_case:
+        //output "in base case\n"
+        push r3 on stack r4
+        goto output_number
+        
+is_empty:
+        //output "in is_empty\n"
+        //output "\n"
+        goto fix_stack
+
+fix_stack:
+        //output "in fix_stack\n"
+        r1 := -1
+        pop r5 off stack r2
+        if (r5 == r1) goto end_print using r3
+        push r5 on stack r4
+        goto fix_stack
+
+end_print:
+        //output "in end_print\n"       
+        pop r5 off stack r2
+        goto r5

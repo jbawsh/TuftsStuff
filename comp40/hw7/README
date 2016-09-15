@@ -1,0 +1,29 @@
+README
+
+Profiling - Hw7
+
+James McCants and Harrison Tross - 11/19/14
+
+
+1. Help Received
+
+- We received help from several TAs and got a general idea of where would should
+be aiming at based on our classmates.
+
+2. Slowest Routine
+
+In the final UM the routine that takes the most time is get_u. This function
+is normally inlined but we un-inlined all of the operation functions to see
+which was taking the most time and then re inlined them in the final submission.
+
+Looking at the assembly we can't see any way of speeding that part up as it is
+just shifting bits around. The reason we spend so much time there is that it
+gets called ALOT. We could try and cut down on calls by making a mask that gets
+all of the pertinent information out of the word in one call as opposed to the
+3 or four currently required.
+
+3. Time Spent
+
+- We spent 2 hours analyzing.
+
+- We spent 7 hours implementing.

@@ -1,0 +1,67 @@
+Script started on Fri 13 Sep 2013 05:09:44 PM EDT
+~/Desktop/comp11/hw2 > hostname
+dell24
+~/Desktop/comp11/hw2 > who
+jmccan03 pts/0        2013-09-13 17:05 (wr-130-64-187-147.medford.tufts.edu)
+hweiss01 pts/1        2013-09-13 12:41 (c-71-192-153-155.hsd1.ma.comcast.net)
+apark04  pts/2        2013-09-13 14:54 (38.122.127.226)
+ashule01 pts/3        2013-09-13 17:00 (resnet157-60.medford.tufts.edu)
+ahakon01 pts/4        2013-09-13 15:55 (209-6-88-52.c3-0.smr-ubr1.sbo-smr.ma.cable.rcn.com)
+jrichi01 pts/5        2013-09-13 15:59 (209-6-40-80.c3-0.smr-ubr1.sbo-smr.ma.cable.rcn.com)
+jmccan03 pts/6        2013-09-13 17:09
+malex    pts/8        2013-09-13 12:27 (c-174-63-80-110.hsd1.ma.comcast.net)
+lberge06 pts/10       2013-09-13 13:43 (wr-130-64-177-18.medford.tufts.edu)
+nr       pts/15       2013-09-13 16:49 (labrador.eecs.tufts.edu)
+hosull01 pts/17       2013-09-13 16:01 (sunfire31.eecs.tufts.edu)
+chamil02 pts/14       2013-09-13 16:49 (resnet138-38.medford.tufts.edu)
+rruene01 pts/19       2013-09-13 16:14 (209-6-93-254.c3-0.smr-ubr1.sbo-smr.ma.cable.rcn.com)
+hweiss01 pts/22       2013-09-13 12:42 (c-71-192-153-155.hsd1.ma.comcast.net)
+noah     pts/23       2013-09-13 15:28 (localhost:19.0)
+gcella01 pts/25       2013-09-13 16:06 (209-6-88-52.c3-0.smr-ubr1.sbo-smr.ma.cable.rcn.com)
+baveri01 pts/26       2013-09-13 16:19 (130.64.23.165)
+pwilso01 pts/27       2013-09-13 16:16 (wr-130-64-222-116.medford.tufts.edu)
+msheldon pts/28       2013-09-13 16:06 (lhasa.eecs.tufts.edu)
+adanie07 pts/29       2013-09-13 15:52 (wr-130-64-218-59.medford.tufts.edu)
+ssinha02 pts/34       2013-09-13 15:38 (wr-130-64-218-40.medford.tufts.edu)
+smetax01 pts/36       2013-09-13 15:42 (209-6-38-140.c3-0.smr-ubr2.sbo-smr.ma.cable.rcn.com)
+baveri01 pts/37       2013-09-13 15:49 (wr-130-64-177-244.medford.tufts.edu)
+ngolde01 pts/38       2013-09-13 15:45 (wr-130-64-185-200.medford.tufts.edu)
+drober05 pts/39       2013-09-13 15:46 (209-6-88-143.c3-0.smr-ubr1.sbo-smr.ma.cable.rcn.com)
+~/Desktop/comp11/hw2 > w
+ 17:09:56 up 20 days,  5:29, 26 users,  load average: 14.75, 14.95, 15.02
+USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT
+jmccan03 pts/0    wr-130-64-187-14 17:05    0.00s  0.09s  0.00s script
+hweiss01 pts/1    c-71-192-153-155 12:41    3:40m  0.22s  0.13s emacs ex8.ic
+apark04  pts/2    38.122.127.226   14:54    2:15m  2.49s  2.38s emacs digits.cp
+ashule01 pts/3    resnet157-60.med 17:00    6:56   1.00s  0.90s emacs digits.cp
+ahakon01 pts/4    209-6-88-52.c3-0 15:55    2:15  21.15s  0.16s -tcsh
+jrichi01 pts/5    209-6-40-80.c3-0 15:59    9:33   0.49s  0.32s emacs digits.cp
+jmccan03 pts/6    -                17:09    0.00s  0.14s  0.11s w
+malex    pts/8    c-174-63-80-110. 12:27    1:09m  4days  4days ./Realtime elev
+lberge06 pts/10   wr-130-64-177-18 13:43    9:00   0.44s  0.24s emacs add8.cpp
+nr       pts/15   labrador.eecs.tu 16:49   20:05   0.17s  0.17s -ksh
+hosull01 pts/17   sunfire31.eecs.t 16:01   21:28   0.37s  0.26s emacs add8.cpp
+chamil02 pts/14   resnet138-38.med 16:49    2:22   0.17s  0.17s -tcsh
+rruene01 pts/19   209-6-93-254.c3- 16:14    0.00s  0.10s  0.10s -tcsh
+hweiss01 pts/22   c-71-192-153-155 12:42    3:58m  0.21s  0.09s ./impcore
+noah     pts/23   localhost:19.0   15:28    1:41m  0.06s  0.00s man chgrp
+gcella01 pts/25   209-6-88-52.c3-0 16:06   50:52   0.97s  0.87s emacs dumb.cpp
+baveri01 pts/26   130.64.23.165    16:19   25:50   0.14s  0.14s -tcsh
+pwilso01 pts/27   wr-130-64-222-11 16:16    2:03   0.64s  0.50s emacs digits.cp
+msheldon pts/28   lhasa.eecs.tufts 16:06   13:44   0.09s  0.09s -bash
+adanie07 pts/29   wr-130-64-218-59 15:52   30:50   0.12s  0.12s -tcsh
+ssinha02 pts/34   wr-130-64-218-40 15:38    1:59   0.17s  0.17s -tcsh
+smetax01 pts/36   209-6-38-140.c3- 15:42    0.00s 18.00s  0.11s -tcsh
+baveri01 pts/37   wr-130-64-177-24 15:49   25:50   0.44s  0.28s ssh baveri01@ho
+ngolde01 pts/38   wr-130-64-185-20 15:45    3:42   0.10s  0.10s -tcsh
+drober05 pts/39   209-6-88-143.c3- 15:46   28:26   0.17s  0.17s -bin/tcsh
+~/Desktop/comp11/hw2 > pwd
+/h/jmccan03/Desktop/comp11/hw2
+~/Desktop/comp11/hw2 > ls -l
+total 4
+-rw-------. 1 jmccan03 other 618 Sep 13 17:07 digits.cpp
+-rw-------. 1 jmccan03 other   0 Sep 13 17:09 typescript
+~/Desktop/comp11/hw2 > exit
+exit
+
+Script done on Fri 13 Sep 2013 05:10:20 PM EDT

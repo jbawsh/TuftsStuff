@@ -1,0 +1,58 @@
+(* James McCants *)
+(* Comp105 - hw5 - ml - 11/6/15 *)
+(* solution.sml *)
+
+(* Problem A *)
+
+(* Compound fuction *)
+
+fun compound _ 0 x = x
+| compound biop n x = biop (x, compound biop (n - 1) x)
+
+(* Curried form for integer exponentiation *)
+
+fun exp _ 0 = 1
+| exp x y = compound op* (y - 1) x
+
+
+(* Problem B *)
+
+(* Reverses a list using foldl *)
+
+fun myrev xs = foldl op:: nil xs
+
+(* Returns smallest value using foldl *)
+
+fun minlist (x::xs) = foldl Int.min x xs
+
+
+(* Problem C *)
+
+(* Implements foldl with recursion *)
+
+fun foldl fun start [] = start
+| foldl fun start (x::xs) = foldl fun (fun (x, start)) xs
+
+(* Implements foldr with recursion *)
+
+fun foldr fun start [] = start
+| foldr fun start (x::xs) = fun (x, foldr fun start xs)
+
+
+(* Problem D *)
+
+fun flatten (x::xs) = x @ flatten xs
+
+
+(* Problem E *)
+
+exception EmptyList
+
+fun mynth 0 (x::xs) = x
+| mynth n (x::xs) = mynth (n - 1) xs
+| mynth n [] = raise EmptyList
+
+(* Problem F *)
+
+fun pairfoldr _ start ([], []) = start
+| pairfoldr fun start (x::xs, y::ys) = fun (x, y, pairfoldr f zero (xs, ys))

@@ -1,0 +1,144 @@
+#include <iostream>
+
+using namespace std;
+
+#include "FrequencyTable.h"
+
+FrequencyTable::FrequencyTable()
+{
+        list = empty();
+        temp = empty();
+        temp_in = empty();
+}
+
+bool FrequencyTable::in(string word)
+{
+        temp_in = list;
+
+        //cerr << "running in" << endl;
+
+        while (!isEmpty(temp_in) && (first(temp_in).word <= word)) {
+                if (first(temp_in).word == word) {
+                        return true;
+                }
+                temp_in = rest(temp_in);
+        }
+        return false;
+}
+
+void FrequencyTable::insert(string word)
+{
+        WordFreq new_data;
+
+        new_data.freq = 1;
+        new_data.word = word;
+        
+        temp = list;
+
+        //cerr << "inside insert" << endl;
+
+        if ((!in(word)) && (isEmpty(list) || (word < first(list).word))) {
+                list = prepend(new_data, list);             
+        } else if (!in(word)) {
+                while (!isEmpty(temp) && 
+                       (first(temp).word < word) &&
+                       (!isEmpty(rest(temp))) &&
+                       (first(rest(temp)).word < word)) {
+                        temp = rest(temp);
+                }
+                insertAfter(new_data, temp);
+        } else {
+                while (!isEmpty(temp) && (first(temp).word <= word)) {
+                        if (first(temp).word == word) {
+                                set_freq(temp, (frequency(word) + 1));
+                        }
+                        temp = rest(temp);
+                }
+        }
+        //cerr << "finished insert" << endl;
+        return;
+}
+
+int FrequencyTable::frequency(string word)
+{
+        int frequency = 0;
+
+        temp = list;
+
+        if (in(word)) {
+                while (!isEmpty(temp) && first(temp).word <= word) {
+                        if (first(temp).word == word) {
+                                frequency = first(temp).freq;
+                                break;
+                        }
+                        temp = rest(temp);
+                }
+        }
+        //cerr << frequency << endl;
+        return frequency;
+}
+
+int FrequencyTable::size()
+{
+        int counter = 0;
+
+        temp = list;
+
+        while (temp != NULL) {
+                counter++;
+                temp = rest(temp);
+        }
+
+        return counter;
+}
+
+void FrequencyTable::get(int n, string *p_word, int *p_frequency)
+{
+        temp = list;
+
+        //cerr << "inside get" << endl;
+
+        for (int i = 0; i <= n; i++) {
+                if (i == n) {
+                        *p_word = first(temp).word;
+                        *p_frequency = first(temp).freq;
+                        return;
+                } else {
+                        if (isEmpty(temp)) {
+                                return;
+                        } else {
+                                temp = rest(temp);
+                        }
+                }
+        }
+}
+
+void FrequencyTable::destroy()
+{
+        //cout << "running destroy" << endl;
+
+        while (list != NULL) {
+                list = deleteFirst(list);
+        }
+
+        //cerr << "deleted list" << endl;
+
+        /*while (temp != NULL) {
+                temp = deleteFirst(temp);
+                cerr << "deleted temp" << endl;
+        }
+        while (temp_in != NULL) {
+                temp_in = deleteFirst(temp_in);
+                cerr << "deleted temp_in" << endl;
+        }
+        return;
+        */
+
+        temp = deleteFirst(temp);
+        temp_in = deleteFirst(temp_in);
+
+        cerr << list << endl;
+        cerr << temp << endl;
+        cerr << temp_in << endl;
+}
+

@@ -1,0 +1,21 @@
+Profiling - Hw7
+
+James McCants and Harrison Tross - 11/19/14
+
+
+1. Help Received
+
+- We received help from several TAs and got a general idea of where would should
+be aiming at based on our classmates.
+
+2. Slowest Routine
+
+In the final UM the routine that takes the most time is Mem Load. This function
+is normally inlined but we un-inlined all of the operation functions to see
+which was taking the most time and then re inlined them in the final submission.
+
+3. Time Spent
+
+- We spent 2 hours analyzing.
+
+- We spent 7 hours implementing.

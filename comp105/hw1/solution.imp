@@ -1,0 +1,300 @@
+;;
+;; James McCants
+;;
+;; Comp105 - Hw1
+;; 9/15/15
+;;
+;; solution.imp
+;;
+
+;;
+;; Problem 3
+;;
+
+(define sigma (m n)
+        (if (> m n)
+            0 
+            (+ m (sigma (+ m 1) n)) 
+        )
+)
+
+(check-expect (sigma 2 4) 9)
+(check-expect (sigma -3 -1) -6)
+
+;;
+;; sum += m while m <= n
+;;
+
+;;
+;; Problem 4
+;;
+
+(define exp (m n)
+        (if (>= m 0)
+            (if (>= n 0)
+                (if (= 0 n)
+                    1
+                    (* m (exp m (- n 1)))
+                )
+                0
+            )
+            0
+        )
+)
+
+(check-expect (exp 2 3) 8)
+(check-expect (exp 2 -1) 0)
+
+;;
+;; m *= m while n > 0
+;;
+
+(define log (m n)
+        (if (> m 1)
+            (if (> n 0)
+                (if (< (/ n m) 1)
+                    0
+                    (+ 1 (log m (/ n m)))
+                )
+                0
+            )
+            0
+        )
+)
+
+(check-expect (log 4 20) 2)
+
+;;
+;; m = 4, n = 20
+;; 20/4   = 5       < 1 
+;; 5/4    = 1.25    < 1 
+;; 1.25/4 = 0.3125  > 1
+;;
+;; l = 2
+;;
+;; 4^(2 + 1) = 64, 64 > 20
+;;
+
+
+;;
+;; Problem 5
+;;
+
+(define choose (n k)
+        (if (< n 0)
+            0
+            (if (> k n)
+                0
+                (if (= n 0)
+                    1
+                    (if (= k 0)
+                        1
+                        (+ (choose (- n 1) k) (choose (- n 1) (- k 1)))
+                    )
+                )
+            )
+        )
+)
+
+(check-expect (choose 0 0) 1)
+(check-expect (choose 4 2) 6)
+
+;;
+;; if n or k = 0 then the result is 1
+;;
+
+;;
+;; Problem 6
+;;
+
+(define fib (m)
+        (if (= m 1)
+            1
+            (if (= m 0)
+                0
+                (+ (fib (- m 1)) (fib (- m 2)))
+            )
+        )
+)
+
+(check-expect (fib 1) 1)
+(check-expect (fib 10) 55)
+
+;;
+;; fsub0 = 0, fsub1 = 1, then recurse
+;;
+
+;;
+;; Problem 7
+;;
+
+(define recurse_prime (n d)
+        (if (= d 1)
+            1
+            (if (= n d)
+                1
+                (if (= (mod n d) 0)
+                    0
+                    (recurse_prime n (- d 1))
+                )
+            )
+        )
+)
+        
+(define prime? (n)
+        (if (< n 2)
+            0
+            (recurse_prime n (- n 1))
+        )
+)
+
+(check-expect (prime? 2) 1)
+(check-expect (prime? 4) 0)
+(check-expect (prime? 7) 1)
+
+;;
+;; if moddable by anything other than itself and one, not prime
+;;
+
+(define prime_counter (p c)
+        (if (= c 0)
+            p
+            (if (prime? p)
+                (if (= c 1)
+                    (prime_counter p (- c 1))           ;;done
+                    (prime_counter (+ p 1) (- c 1))     ;;find next prime
+                )
+                (prime_counter (+ p 1) c)               ;;not prime
+            )
+        )
+)
+
+(define nthprime (n)
+        (prime_counter 2 n)
+)
+
+(check-expect (nthprime 3) 5)
+(check-expect (nthprime 7) 17)
+
+;;
+;; keep a counter and decrement every time it hits a prime
+;;
+
+(define prime_sum (p s c)
+        (if (= c 0)
+            s
+            (if (prime? p)
+                (if (= c 1)
+                    (prime_sum p (+ s p) (- c 1))
+                    (prime_sum (+ p 1) (+ s p) (- c 1))
+                )
+                (prime_sum (+ p 1) s c)
+            )
+        )
+)
+
+(define sumprimes (n)
+        (prime_sum 2 0 n)
+)
+
+(check-expect (sumprimes 1) 2)
+(check-expect (sumprimes 4) 17)
+
+;;
+;; keep a counter and decrement every time it hits a prime
+;;
+
+(define relprime? (m n)
+        (if (= n 0)
+            (if (= m 1)
+                1
+                0
+            )
+            (relprime? n (mod m n))     ;;try next lowest possible factor
+        )
+)
+
+(check-expect (relprime? 7 4) 1)
+(check-expect (relprime? 64 32) 0)
+
+;;
+;; find gcd, if 1 then relprime
+;;
+
+;;
+;; Problem 8
+;;
+
+(define given-positive-all-fours? (n)
+        (if (= 4 (mod n 10))
+            (if (= 0 (/ n 10))
+                1
+                (given-positive-all-fours? (/ n 10))
+            )
+            0
+        )
+)
+
+(check-expect (given-positive-all-fours? 44444444) 1)
+(check-expect (given-positive-all-fours? 43) 0)
+
+;;
+;; check that % 10 returns 4 and then divide by 10 until the number is done
+;;
+            
+(define all-fours? (n) 
+        (if (> n 0)
+            (given-positive-all-fours? n)
+            0
+        )
+)
+
+(check-expect (all-fours? -44444444) 0)
+(check-expect (all-fours? 404) 0)
+
+;;
+;; simple way to exclude -4 from posibility
+;;
+
+(define check_digits (n d)
+        (if (= d (mod n 10))
+            (if (= 0 (/ n 10))
+                1
+                (check_digits (/ n 10) d)
+            )
+            0
+        )
+)
+
+(define all-one-digit? (n)
+        (if (= n 0)
+            0
+            (check_digits n (mod n 10))
+        )
+)
+
+(check-expect (all-one-digit? 5555) 1)
+(check-expect (all-one-digit? 0010) 0)
+(check-expect (all-one-digit? 0) 0)
+
+;;
+;; finds the digit and then mods and divides by 10 to check the rest
+;;
+
+(define check_decreasing (n d)
+        (if (>= d (mod n 10))
+            (if (= 0 (/ n 10))
+                1
+                (check_decreasing (/ n 10) (mod n 10))
+            )
+            0
+        )
+)
+
+(define increasing-digits? (n)
+        (check_decreasing n (+ 1 (mod n 10)))
+)
+
+(check-expect (increasing-digits? 1234) 1)
+(check-expect (increasing-digits? 0002) 1)
+(check-expect (increasing-digits? 010) 0)

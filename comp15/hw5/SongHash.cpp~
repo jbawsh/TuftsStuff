@@ -1,0 +1,113 @@
+//
+//  SongHash.cpp
+//  SongSearch2
+//
+//  Created by James McCants on 4/29/14.
+//  Copyright (c) 2014 James McCants. All rights reserved.
+//
+
+#include "SongHash.h"
+
+using namespace std;
+
+WordTable::WordTable() {
+        currentSong = NULL;
+        thisSong = NULL;
+        wordList.max_load_factor(LOADFACTOR);
+}
+
+void WordTable::insert(string w, string a, string t) {
+
+        bool alreadyIn = true;
+
+        if (currentSong == NULL) {
+                currentSong->artist = a;
+                currentSong->title = t;
+                currentSong->lyrics.push_back(w);
+        } else {
+                currentSong.lyrics.push_back(w);
+        }
+
+        string word = alphaOnly(w);
+        uint32_t hash = hash_string(word);
+        
+        if(wordList[hash].empty()) alreadyIn = false;
+
+        if (alreadyIn == true) {
+                for (int i = 0; i < wordList[hash].bucket_size(); i++) {
+                        if (wordList[hash][i].word == word) {
+                                
+
+}
+
+word WordTable::createWord(string word) {
+        word tempWord = new word;
+        word_freq tempFreq = new word_freq;
+        tempFreq.freq = 1;
+        tempFreq.song = currentSong;
+        tempWord.song_list.push_back(tempfreq);
+        tempWord.word = word;
+        return tempWord;
+}
+
+//
+// read_lyics 
+//   purp: read in song data from a disk file
+//   args: the name of the file, bool to ask for progress status
+//   rets: nothing
+//   does: calls a function each time a word is found
+//
+void WordTable::read_lyrics(char * filename, bool show_progress)
+{
+        ifstream in(filename);			// creates an input stream
+        int song_count = 0;			// for progress indicator
+	string artist, title, word;		// data from the file
+
+	// -- While more data to read...
+	while ( ! in.eof() ) 
+	{
+		// -- First line is the artist
+		getline(in, artist);
+		if (in.fail()) break;
+
+		// -- Second line is the title
+		getline(in, title);
+		if (in.fail()) break;
+
+		if ( show_progress )
+		{
+			song_count++;
+			if (song_count % 10000 == 0) {
+				cout << "At "       << song_count << 
+					" Artist: " << artist     << 
+					" Title:"   << title << endl;
+			}
+		}
+                song_info current = new song_info;
+                current.artist = artist;
+                current.title = title;
+		// -- Then read all words until we hit the 
+		// -- special <BREAK> token
+		while ( in >> word && word != "<BREAK>" ){
+                        insert(word,artist,title);
+		}
+		// -- Important: skip the newline left behind
+		in.ignore();
+	}
+}
+
+
+// alphaOnly() strips off non-alphabetic and non-digit characters
+// and returns a string with just the alphas and digits.
+
+string WordTable::alphaOnly(string s){
+
+        ostringstream ss;
+
+        for (size_t i=0;i<s.length();i++) {
+                if (isalnum(s[i])){
+                        ss << (char)(tolower(s[i]));
+                }
+        }
+        return ss.str();
+}

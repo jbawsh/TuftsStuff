@@ -1,0 +1,32 @@
+#
+# Makefile for rectangle assignment, heavily commented version
+# Lines starting with # are comments.
+#
+# To use this file, simply type  make
+# in the directory containing this file and the source code
+#
+# The "make" command will consult this file to see what files are
+# needed to build the program AND what command to run to compile them
+#
+CXX = /usr/bin/clang++		# this defines a symbol with name CXX
+FLAGS = -Wall -Wextra -O3 -lm	# this defines a symbol with name FLAGS
+				# -O3 means: optimize at level 3
+				# -lm is for the math library 
+
+rectangleTester: rectangleTester.cpp rectangle.cpp rectangle.h
+	${CXX} ${FLAGS} -o rectangleTester rectangleTester.cpp rectangle.cpp
+
+#
+# This item is a helper item that allows you to type  make clean
+# and make will run the command "rm -f rectangleTester"
+# which will delete the executable program in case you want to clean up
+#
+clean:
+	rm -f rectangleTester
+
+provide:
+	provide comp15 hw1 rectangle.h rectangle.cpp rectangleTester.cpp \
+		Makefile Readme
+
+# note: if you called your readme file something other than Readme, you
+# have to change Readme to the name you used

@@ -1,0 +1,120 @@
+// print.ums
+//
+// James McCants and Jun Soo Shin
+//
+// Prints out binary numbers in decimal.
+
+.zero r0
+.temps r6, r7
+.section text
+
+
+//Starts function, stores return address r1 on stack r2.
+print:
+        //if (r3 == prt_stk) goto output_help using r5
+        push r1 on stack r2
+        push r3 on stack r2
+
+        goto check_empty
+
+
+//Checks to see if there are values to be printed.
+check_empty:
+        if (r4 == val_stk) goto fix_start using r3    //is empty
+
+        goto get_number
+
+        
+//Gets a number off the value stack to start parsing it.
+get_number:
+        output ">>> "
+        pop r3 off stack r4     //number
+
+        r5 := -1     //buffer
+        push r5 on stack r4
+        
+        r5 := r3
+        pop r3 off stack r2
+        push r5 on stack r3      //save number for later
+        push r3 on stack r2
+        r3 := r5
+
+        r1 := 0
+        if (r3 <s r1) goto negative using r5
+
+        goto find_number
+
+
+//Flips sign on negatives before they are parsed.
+negative:
+        output "-"
+        r3 := -r3
+        goto find_number
+
+
+//Outputs the indvidual digits of a number which have been stored on stack
+//r4 above the buffer
+output_number:
+        r5 := -1
+
+        pop r1 off stack r4     //individual digit
+        
+        if (r1 == r5) goto new_line using r3
+        r5 := 48      //returns to ascii format
+        r1 := r1 + r5
+        output r1
+        goto output_number
+
+
+//Adds a newline after output.
+new_line:
+        output "\n"
+        goto check_empty
+
+
+//This function takes a number in r3 and removes the individual digits by
+//dividing by 10 and then multiplying and subtracting the product from the
+//original where the result is the smallest digit. That is then pushed onto
+//stack r4 above a buffer, divide by 10 again and then repeat until the base
+//case where the number is less than 10.
+find_number:
+        r5 := 10
+        r1 := r3 / r5
+        r5 := 0
+        if (r1 == r5) goto base_case using r5
+
+        r5 := 10
+        r1 := r1 * r5
+        r5 := r3 - r1
+        push r5 on stack r4
+        
+        r5 := 10
+        r3 := r1 / r5
+        goto find_number
+
+
+//Saves last digit.
+base_case:
+        push r3 on stack r4
+        goto output_number        
+
+
+//Pops the prt_stk so it only happens once.
+fix_start:
+        pop r3 off stack r2
+        //if (r3 == prt_stk) goto output_help using r1
+        goto fix_stack
+
+
+//Pop off all the numbers we saved in the print stack back to the value stack.
+fix_stack:
+        if (r3 == prt_stk) goto end_print using r5
+        pop r5 off stack r3 
+        push r5 on stack r4
+        goto fix_stack
+
+
+//Returns.
+end_print:       
+        pop r5 off stack r2
+        goto r5

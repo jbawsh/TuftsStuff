@@ -1,0 +1,70 @@
+#include <iostream>
+#include <string>
+#include <cctype>
+
+using namespace std;
+
+#include "FrequencyTable.h"
+
+FrequencyTable input(FrequencyTable list);
+void output(FrequencyTable list);
+
+int main()
+{
+        FrequencyTable list;
+
+        list = input(list);
+        cerr << "finished input" << endl;
+        output(list);
+        cerr << "finished output" << endl;
+        list.destroy();
+        cerr << "finished destroy" << endl;
+        return 0;
+}
+
+FrequencyTable input(FrequencyTable list)
+{
+        int len;
+        string word;
+        
+        while (cin >> word) {
+                if (((word[0] >= 'a') &&
+                     (word[0] <= 'z')) ||
+                    ((word[0] >= 'A') &&
+                     (word[0] <= 'Z'))) {
+                        len = word.length();
+                        for (int i = 0; i < len; i++) {
+                                word[i] = tolower(word[i]);
+                        }
+                        list.insert(word);
+                }
+        }
+        return list;
+}
+
+void output(FrequencyTable list)
+{
+        string *p_word;
+        int *p_freq;
+        p_word = new string;
+        p_freq = new int;
+        *p_freq = 10;
+        *p_word = "mom";
+        int size = 0;
+
+        //cerr << "inside output" << endl;
+
+        size = list.size();
+
+        for (int i = 0; i < size; i++) {
+                list.get(i, p_word, p_freq);
+                cout << *p_freq << " " << *p_word << endl;
+                //cout << i << " " << size << endl;
+        }
+        
+        p_freq = NULL;
+        delete p_freq;
+        p_word = NULL;
+        delete p_word;
+}
+       

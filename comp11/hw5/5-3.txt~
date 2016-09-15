@@ -1,0 +1,10 @@
+//James McCants
+//10/11/13
+
+Array       Pos Value Sum Total
+num[SPACE]   0    8    8    1
+num[SPACE]   1   10   18    2
+num[SPACE]   2    3   21    3
+num[SPACE]   3    2   23    4
+num[SPACE]   4    9   32    5
+num[SPACE]   5    0   32    5

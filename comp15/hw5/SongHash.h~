@@ -1,0 +1,43 @@
+#ifndef __SongSearch__SongHash__
+#define __SongSearch__SongHash__
+
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <vector>
+#include <unordered_map>
+#include "hashfunc.h"
+
+const float LOADFACTOR = 0.5f;
+
+struct song_info {
+        string title;
+        string artist;
+        vector<string> lyrics;
+};
+
+struct word_freq {
+        int freq;
+        song_info* song;
+};
+
+struct word {
+        string word;
+        vector<word_freq> song_list;
+};
+
+class WordTable {
+    
+ public:
+        WordTable();
+        void read_lyrics(char * filename, bool show_progress );
+
+ private:
+        void insert(string w, string a, string t);
+        string alphaOnly(string s);
+        song_info* currentSong;
+        std::unordered_map<uint32_t, word> wordList;
+        word createWord(string word);
+};
+
+#endif /* defined(__SongSearch__SongHash__) */

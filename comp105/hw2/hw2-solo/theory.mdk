@@ -1,0 +1,191 @@
+Title         : OpSem Theory
+Subtitle      : COMP105 Fall 2015
+Author        : James McCants
+
+Comment: These parameters govern typesetting of code and formulas
+~Pre        : css-padding-left=0em
+~Math-Inline: input=mathpre
+
+[TITLE]
+
+<!-- MathDefs allows us to define some useful commands for formatting
+     inference rules -->
+
+~ MathDefs
+\newcommand{\state}[1]{\langle #1 \rangle}
+\newcommand{\inference}[2]{\dfrac{#1}{#2}}
+\newcommand{\yields}[0]{\Downarrow}
+~
+
+## Problem 16 {-}
+
+Here are the standard ImpCore inferences rules for `VAR(x)`:
+
+$\inference%
+  {x \in @dom \rho}%
+  {\state{@VAR(x), \xi, \phi, \rho} \yields \state{\rho(x), \xi, \phi, \rho}}$
+
+and
+
+$\inference%
+  {x \notin @dom  \rho \\ x \in @dom \xi}%
+  {\state{@VAR(x), \xi, \phi, \rho} \yields \state{\xi(x), \xi, \phi, \rho}}$
+
+### (a) Awk-like semantics {-}
+
+#### Add 'VAR(x)': {-}
+
+$\inference%
+  {x \notin @dom  \rho \\ x \notin @dom \xi}%
+  {\state{@VAR(x), \xi, \phi, \rho} \yields \state{0, \xi \prime (x\rightarrow0), \phi, \rho}}$
+
+
+#### Add 'SET(x)': {-}
+
+$\inference%
+  {x \notin @dom  \rho \\ x \notin @dom \xi \\       {\state{e, \xi, \phi, \rho} \yields \state{e, \xi \prime, \phi, \rho \prime}}}%
+  {\state{@SET(x, e), \xi, \phi, \rho} \yields \state{v, \xi \prime (x\rightarrow v), \phi, \rho \prime}}$
+
+
+### (b) Icon-like semantics {-}
+
+#### Add 'VAR(x)': {-}
+
+$\inference%
+  {x \notin @dom  \rho \\ x \notin @dom \xi}%
+  {\state{@VAR(x), \xi, \phi, \rho} \yields \state{0, \xi, \phi, \rho \prime (x\rightarrow0)}}$
+
+#### Add 'SET(x)': {-}
+
+$\inference%
+  {x \notin @dom  \rho \\ x \notin @dom \xi \\        {\state{e, \xi, \phi, \rho} \yields \state{e, \xi, \phi, \rho \prime}}}%
+  {\state{@SET(x, e), \xi, \phi, \rho} \yields \state{v, \xi, \phi, \rho \prime (x\rightarrow v)}}$
+
+### (c) Which do you prefer and why? {-}
+
+I prefer the change to Icon because keeping variables that can be declared implicitly in a local environment seems safer. It limits the possibility to break things that rely on the global environment.
+
+## Problem 13 {-}
+
+$\inference%
+{\inference%
+  {\inference%
+  	{x \in @dom \rho \\ \rho (x) = 99}%
+  	{\state{@VAR(x), \xi, \phi, \rho} \yields \state{99, \xi, \phi, \rho}}%
+  \\ \inference%
+  	{}%
+  	{\state{@LITERAL(3), \xi, \phi, \rho} \yields \state{3, \xi, \phi, \rho}}%
+  }%
+  {\state{@SET(@VAR(x), @LITERAL(3)), \xi, \phi, \rho} \yields \state{3, \xi \prime, \phi, \rho \prime (x \rightarrow 3)}}%
+  \\ \inference%
+  	{x \in @dom \rho \prime \\ \rho \prime (x) = 3}%
+  	{\state{@VAR(x), \xi \prime, \phi, \rho \prime} \yields \state{3, \xi \prime, \phi, \rho \prime}}%
+  }%
+{\state{@BEGIN((@SET, @VAR(x), @LITERAL(3)) @VAR(x)), \xi, \phi, \rho} \yields \state{3, \xi \prime, \phi, \rho \prime}}$
+
+### The cut off line: {-}
+
+$\state{@VAR(x), \xi \prime, \phi, \rho \prime} \yields \state{3, \xi \prime, \phi, \rho \prime}$
+
+## Problem 14 {-}
+
+#### IfTrue: {-}
+
+$\inference%
+  {\state{@VAR(x), \xi, \phi, \rho} \yields \state{v_1, \xi, \phi, \rho}%
+  \\        v_1 \neq 0 \\        \state{@VAR(x), \xi, \phi, \rho} \yields \state{v_2, \xi \prime \prime, \phi, \rho \prime \prime}}%
+  {\state{@IF(@VAR(x), @VAR(x), @LITERAL(0)), \xi, \phi, \rho} \yields \state{v_2, \xi \prime \prime, \phi, \rho \prime \prime}}$
+
+#### In this case:               $v_1 = v_2 \neq 0$ {-}
+
+#### IfFalse: {-}
+
+$\inference%
+  {\state{@VAR(x), \xi, \phi, \rho} \yields \state{v_1, \xi, \phi, \rho}%
+  \\        v_1 = 0 \\        \state{@LITERAL(0), \xi, \phi, \rho} \yields \state{v_2, \xi \prime \prime, \phi, \rho \prime \prime}}%
+  {\state{@IF(@VAR(x), @VAR(x), @LITERAL(0)), \xi, \phi, \rho} \yields \state{v_2, \xi \prime \prime, \phi, \rho \prime \prime}}$
+
+#### In this case:               $v_1 = v_2 = 0$ {-}
+
+## Problem 23 {-}
+
+### Base Cases {-}
+
+Literal: a) In the case of Literal $\rho$ is popped off the stack and pushed back on 
+with no change. b) Because $\rho$ is not changed in any way nothing is thrown away. 
+There is no possibility for the stack to be missing environments.
+
+FormalVar: a) In the case of FormalVar $\rho$ is popped off the stack, checked for x, 
+and then pushed back on when x is found. b) Because $\rho$ is not changed in any way 
+nothing is thrown away. There is no possibility for the stack to be missing environments
+.
+
+GlobalVar: a) In the case of GlobalVar $\rho$ is popped off the stack, checked for x, 
+and then pushed back on when x is not found. b) Because $\rho$ is not changed in any 
+way nothing is thrown away. There is no possibility for the stack to be missing 
+environments.
+
+EmptyBegin: a) In the case of EmptyBegin $\rho$ is popped off the stack and pushed back 
+on with no change. b) Because $\rho$ is not changed in any way nothing is thrown away. 
+There is no possibility for the stack to be missing environments.
+
+ApplyAdd: a) In the case of ApplyAdd $\rho$ is not used in the addition so it can stay 
+on the stack. b) Because $\rho$ is not used it is not changed and nothing is thrown away
+. There is no possibility for the stack to be missing environments.
+
+### Induction Steps {-}
+
+FormalAssign: a) In the case of FormalAssign $\rho$ is popped off the stack and a 
+recursive call to eval is made to find what x should be set to. Once x is modified to 
+its new value $\rho \prime$, which contains the updated x, is pushed onto the stack and 
+the old $\rho$ is thrown away. b) No environments have been lost on the stack in this 
+procedure because $\rho \prime$ contains the all of $\rho$ with just x updated.
+
+IfTrue: a) In the case of IfTrue $\rho$ is popped off the stack and a call to eval is 
+made to determine the case of the if statement. Any change to $\rho$ results in the 
+environment being copied with the change recorded. The updated environment is $\rho 
+\prime$ and then a second call to eval is made to check what to do when true. Any 
+changes here are recorded similarily in $\rho \prime \prime$ which is then pushed on 
+the stack. b) At every step something changes $\rho$ is copied with the change recorded 
+into some $\rho \prime$ and then $\rho$ is thrown out. There is no loss of environment 
+on the stack.
+
+IfFalse: a) In the case of IfFalse $\rho$ is popped off the stack and a call to eval is 
+made to determine the case of the if statement. Any change to $\rho$ results in the 
+environment being copied with the change recorded. The updated environment is $\rho 
+\prime$ and then a second call to eval is made to check what to do when false. Any 
+changes here are recorded similarily in $\rho \prime \prime$ which is then pushed on 
+the stack. b) At every step something changes $\rho$ is copied with the change recorded 
+into some $\rho \prime$ and then $\rho$ is thrown out. There is no loss of environment 
+on the stack.                                                                           
+
+WhileIterate: a) In the case of WhileIterate $\rho$ is popped off the stack and eval is 
+called on $e_1$, any change is recorded and creates $\rho \prime$. If $v_1 \neq 0$ then 
+$e_2$ is evaluated and any change to $\rho \prime$ is recorded in $\rho \prime \prime$. 
+The whole thing then recursively calls itself starting with $\rho \prime \prime$ as the 
+initial environment. b) $\rho \prime$ is not pushed back on the stack until WhileEnd so 
+this is addressed there.
+
+WhileEnd: a) In the case of WhileEnd $\rho$ is popped off the stack and eval is called 
+on $e_1$, any change is recorded and creates $\rho \prime$. If $v_1 = 0$ then $\rho 
+\prime$ is pushed onto the stack. b) At every step something changes $\rho$ is copied 
+with the change recorded into some $\rho \prime$ and then $\rho$ is thrown out. There 
+is no loss of environment on the stack.                                                 
+
+Begin: a) In the case of Begin, $\rho$ is popped off of the stack and then every $e_n$ 
+is evaluated. Each evaluation results in $\rho_n$ being changed to $\rho_n \prime$. 
+Where the old environment is copied with the changes recorded. When the last $e_n$ has 
+been evaluated then $\rho \prime$ is pushed onto the stack. b) At every step something 
+changes $\rho$ is copied with the change recorded into some $\rho \prime$ and then 
+$\rho$ is thrown out. There is no loss of environment on the stack.
+
+ApplyUser: a) In the case of ApplyUser, $\rho$ is popped off of the stack and then 
+every $e_n$ is evaluated. Each evaluation results in $\rho_n$ being changed to $\rho_n 
+\prime$. Where the old environment is copied with the changes recorded. When the last 
+$e_n$ has been evaluated then $\rho \prime$ is pushed onto the stack. b) At every step 
+something changes $\rho$ is copied with the change recorded into some $\rho \prime$ and 
+then $\rho$ is thrown out. There is no loss of environment on the stack.
+
+
+
+

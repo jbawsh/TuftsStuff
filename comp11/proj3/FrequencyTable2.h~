@@ -1,0 +1,29 @@
+#ifndef __wordfreq__FrequencyTable2__
+#define __wordfreq__FrequencyTable2__
+
+#include "WordFreqList.h"
+
+const int LETTERS = 26;
+
+class FrequencyTable
+{
+ public:
+        FrequencyTable();
+        bool in(string word);
+        void insert(string word);
+        int frequency(string word);
+        int size();
+        void get(int n, string *p_word, int *p_frequency);
+        void destroy();
+
+ private:
+        WFList list[LETTERS];
+        WFList temp[LETTERS];
+        WFList temp_in[LETTERS];
+        
+        int ltr;
+
+        int ifw(string word);
+};
+
+#endif

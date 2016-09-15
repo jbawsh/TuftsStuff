@@ -1,0 +1,11 @@
+#include <iostream>
+
+using namespace std;
+
+#include "rectangle.h"
+
+void reportRectangle(rectangle r);
+
+int main()
+{
+        rectangle r1;

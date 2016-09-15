@@ -1,0 +1,8 @@
+.zero r0
+.temps r6, r7
+.section init
+         goto run linking r1
+
+.section text
+end_prog:
+        halt

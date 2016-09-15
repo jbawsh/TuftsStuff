@@ -1,0 +1,99 @@
+#include <iostream>
+using namespace std;
+
+#include "hall.h"
+#include "string2int.h"
+
+void command_loop(Hall event[]);
+void do_rq(Hall event[]);
+void do_pr(Hall event[]);
+void do_ca(Hall event[]);
+
+int main()
+{
+        Hall event[EVENTS];
+        command_loop(event);
+
+        return 0;
+}
+
+void command_loop(Hall event[])
+{
+        string action;
+
+         do {
+                cin >> action;
+
+                if (action == "RQ") {
+                        do_rq(event);
+                } else if (action == "PR") {
+                        do_pr(event);
+                } else if (action == "CA") {
+                        do_ca(event);
+                }
+        } while (action != "QU");
+        return;
+}
+
+void do_rq(Hall event[])
+{
+        string action, name, type, day;
+        int num, day_num;
+        bool done = false;
+
+        cin >> name >> num >> type >> day;
+
+        if (day == "any") {
+                for (int x = 0; (x < EVENTS) && (done == false); x++) {
+                        if (event[x].request(name, num, type, x) == true) {
+                                done = true;
+                        }
+                }
+                if (done == false) {
+                        cout << "NO " << name << " not-available" << endl;
+                }
+        } else {
+                day_num = string2int(day);
+                if (event[day_num].request(name, num, type, day_num) == false) {
+                        cout << "NO " << name << " not-available" << endl;
+                }
+        }
+        return;
+}
+
+void do_pr(Hall event[])
+{
+        string day;
+        int day_num;
+        
+        cin >> day;
+        
+        if (day == "all") {
+                for (int x = 0; x < EVENTS; x++) {
+                        event[x].print();
+                }
+        } else {
+                day_num = string2int(day);
+                event[day_num].print();
+        }
+        return;
+}
+
+void do_ca(Hall event[])
+{
+        string name, day;
+        int day_num;
+                
+        cin >> name >> day;
+        day_num = string2int(day);
+        if (event[day_num].cancel(name) == true) {
+                cout << "OK " << name << " cancelled" << endl;
+        } else {
+                cout << "NO " << name << " no-reservation";
+                                cout << endl;            
+        }
+        return;
+}
+                        
+                                
+                

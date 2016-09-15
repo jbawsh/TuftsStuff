@@ -1,0 +1,30 @@
+// urt0.ums
+//
+// James McCants and Jun Soo Shin
+//
+// Used to setup stacks and temps.
+
+.zero r0
+      .temps r6, r7
+
+      //call stack
+      .section data
+      .space 20000
+      endstack:
+
+      //value stack
+      .section data
+      .space 11000
+      val_stk:
+
+      //temp stack to hold values from value stack while other operations
+      //are going on inside of it in print
+      .section data
+      .space 11000
+      prt_stk:
+
+.section init
+         r0 := 0
+         r2 := endstack
+         r4 := val_stk
+         r3 := prt_stk

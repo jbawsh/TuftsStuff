@@ -1,0 +1,40 @@
+Your design document goes here.
+
+James McCants
+
+4/16/14
+
+My songsearch program will add every word found while reading in the file into a
+hashtable. In the bucket for the hashtable I will have a vector of structs with
+each struct containing a pointer to a song struct that contains (the song title,
+artist and a vector of the lyrics with punctuation) and a counter for the
+number of times a song contains a word (tracked from duplicate words in the
+same song).
+
+Example Hashtable bucket vector node:
+
+struct Song {
+       
+       pointer to songInfoStruct (title, artist, vector of lyrics);
+
+       counter of times word appears;
+
+};
+
+The above is what I will do in the read in phase. I will also AlphaOnly all the
+words when I hash them. When someone searches for a word I will AlphaOnly it and
+hash it to find the right bucket. Once there I will search through the vector in
+that hash bucket to find the top 10 largest counters for word appearance. This
+way I only have to make 10 swaps so it should be more efficient (I think).
+
+Then my print function will use the search the lyrics to print out the 5 words
+before and after the chosen word with punctuation.
+
+I'm favoring speed over memory because my Hashtable will have every single word.
+That's big.
+
+Signed off by: (TA / Chris / Bruce)
+
+My TA in lab said that the general idea was fine, I'm in the 3:00 pm lab on
+tuesday and he has red hair but I don't remember his name.
+

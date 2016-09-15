@@ -1,0 +1,77 @@
+/***********************************************************************/
+/*                          IntList Utilities                          */
+/***********************************************************************/
+
+#include <iostream>
+
+using std::cout;
+
+#include "IntList.h"
+
+
+/*
+ * Can use a while or for loop. 
+ */
+void print(IntList list)
+{
+	// STUB
+}
+
+// 	4 ~> 3 ~> ()
+void printArtistically(IntList list)
+{
+	// STUB
+}
+
+int sumList(IntList list)
+{
+	// STUB
+	return -1;
+}
+
+int length(IntList list)
+{
+	// STUB
+	return 0;
+}
+
+IntList copy(IntList list)
+{
+	// STUB
+	return empty();
+}
+
+IntList mapIncrement(IntList list)
+{
+	// STUB
+	return empty();
+}
+
+IntList mapIncrementBy(IntList list, int increment)
+{
+	// STUB
+	return empty();
+}
+
+IntList sum(IntList list1, IntList list2)
+{
+	// STUB
+	return empty();
+}
+
+IntList filterPositive(IntList list)
+{
+	// STUB
+	return empty();
+}
+
+IntList range(int lo, int hi)
+{
+	// STUB
+	return empty();
+}
+
+void deleteList(IntList *p_list)
+{
+	// STUB
+}

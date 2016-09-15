@@ -1,0 +1,22 @@
+#ifndef __WordFreqList_H__
+#define __WordFreqList_H__
+
+struct WordFreq
+{
+        int freq;
+        std::string word;
+};
+
+struct WFListNode;
+typedef WFListNode *WFList;
+
+WFList   empty       (void);
+bool     isEmpty     (WFList list);
+WFList   prepend     (WordFreq data, WFList list);
+WordFreq first       (WFList list);
+WFList   rest        (WFList list);
+WFList   deleteFirst (WFList list);
+void     insertAfter (WordFreq data, WFList list);
+void     set_freq    (WFList list, int update);
+
+#endif

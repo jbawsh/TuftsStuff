@@ -1,0 +1,57 @@
+  1a No it doesn't.
+
+1b amIBefore is missing a getter function, in cancel he accesses an index that
+doesn't exist, doesn't decrease the number of events, delete needs bracketts.
+
+1c trying to compile would have caught the getter and trying to cancel an event
+would have led to a segfault and an out of oreder array.
+
+1d readable.
+
+1e efficient but needs to check corners.
+
+
+   2a Nope.
+
+2b amIBefore returns true for some of the wrong stuff, doesn't resize the array
+if at the limit. Might segfault for not checking in scheduleEvent. Cases don't
+cover all possibilities, cancel doesn't move everything after finding the event
+, doesn't account for the event not being in there at all. Has an uneccessary
+break.
+
+2c compiling would have caught some errors, trying to schedule the first event
+may have led to a segfault. Any events after that would have been out of order
+pretty quickly. Doesn't expand the array so once it was full it would break. 
+
+2d has some useless comments and goes over 80 cols sometimes
+
+2e uses a few uneccesary checks, doesn't utilize prewritten functions
+
+
+   3a Yes
+
+3b I think it works.
+
+3c Testing canceling and scheduling to the point that the array has to be 
+expanded helps check for stuff.
+
+3d Helpful commenting throughout.
+
+3e Seems to be quick.
+
+   
+   4a No.
+
+4b the cancel function doesn't work if eventCount and Capacity are the same
+and it doesn't decriment the event count once deleted it just fills in a reset
+event which is wrong. The schedule event function has uneccesary parts and uses
+empty "" events wrong.
+
+4c running cnacel on a full array would catch it
+
+4d schedule event is confusing by incrimenting by 2 instead of one and using
+>= as opposed to just >. Also schedlu event should already schedule events 
+with the same start time after ones already there.
+
+4e some extra checks that could be implemented elsewhere.
+

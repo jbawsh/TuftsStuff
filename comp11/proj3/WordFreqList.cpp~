@@ -1,0 +1,82 @@
+//
+//
+//
+//
+
+#include <iostream>
+
+using namespace std;
+
+#include "WordFreqList.h"
+
+struct WFListNode {
+        WordFreq    data;
+        WFListNode *next;
+};
+
+WFList empty()
+{
+        return NULL;
+}
+
+bool isEmpty(WFList list)
+{
+        return list == NULL;
+}
+
+WFList prepend(WordFreq new_data, WFList list)
+{
+        //cerr << "running prepend" << endl;
+
+        WFListNode *p_node = new WFListNode;
+
+        p_node->data.freq = new_data.freq;
+        p_node->data.word = new_data.word;
+
+        if (list == NULL) {
+                p_node->next = NULL;
+                //cerr << "it was null" << endl;
+        } else {
+                p_node->next = list;
+        }
+
+        return p_node;
+}
+
+WordFreq first(WFList list)
+{
+        return list->data;
+}
+
+WFList rest(WFList list)
+{
+        //cerr << "running rest" << endl;
+        return list->next;
+}
+
+WFList deleteFirst(WFList list)
+{
+        //cerr << "running delete first" << endl;
+
+        WFList remainder = rest(list);
+        //cerr << "ran rest inside delete" << endl;
+        //cerr << remainder << endl;
+        list->next       = NULL;
+        delete list;
+        return remainder;
+}
+
+void insertAfter (WordFreq new_data, WFList list)
+{
+        //cerr << "inside insertAfter" << endl;
+
+        list->next = prepend(new_data, rest(list));
+}
+
+void set_freq (WFList list, int update)
+{
+        //cerr << "inside set_frq" << endl;
+        
+        list->data.freq = update;
+        return;
+}

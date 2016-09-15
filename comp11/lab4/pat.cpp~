@@ -1,0 +1,28 @@
+//
+//  pat.cpp  -- draw a checkerboard pattern
+//  version1: draws 8 rows of 8 chars alternating X and -
+//  Goal: allow user to enter two strings and 
+//		the number of pairs per line
+//		the number lines per set
+//		the number sets per image
+//
+//  tools: loops and functions(with arguments)
+//
+
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+	cout << "X-X-X-X-" << endl;
+	cout << "-X-X-X-X" << endl;
+	cout << "X-X-X-X-" << endl;
+	cout << "-X-X-X-X" << endl;
+	cout << "X-X-X-X-" << endl;
+	cout << "-X-X-X-X" << endl;
+	cout << "X-X-X-X-" << endl;
+	cout << "-X-X-X-X" << endl;
+
+        return 0;
+}

@@ -1,0 +1,57 @@
+//
+// This program reads in two strings and the height of the pattern
+// and then prints out one less of the first string and one more of the second
+// each time
+// Name: James McCants
+// Date: 10/4/13
+//
+
+# include <iostream>
+
+using namespace std;
+
+void draw_picture(string s1, string s2, int height);    // declaration
+
+int main () {
+
+  string s1;
+  string s2;
+  int height;
+
+    cout << "First string? ";
+    cin >> s1;  
+    cout << "Second string? ";
+    cin >> s2;
+    cout << "Height? ";
+    cin >> height;
+
+    draw_picture(s1, s2, height);
+
+    return 0;
+}
+
+void draw_picture(string s1, string s2, int height) {
+
+  int counts1 = 0;
+  int counts2 = height;
+  int counth = 0;
+
+  while(counth < height) {
+
+  while(counts2 < height) {
+    cout << s2;
+    counts2++;
+  }
+  while(counts1 < (height - 1)) {
+    cout << s1;
+    counts1++;
+  }
+  cout << endl;
+
+  counth++;
+
+  counts1 = counth;
+
+  counts2 = counts2 - counth;
+  }
+}

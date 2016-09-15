@@ -1,0 +1,66 @@
+main
+	purpose: declare the array and call the utility functions
+	argumnets: 2D array of struct, number of elements
+	returns: 0
+	effects: sets up the array
+	notes: calls the array using global constants
+
+initialize
+	purpose: fill the array with empty seats
+	arguments: 2D array of struct, number of elements
+	returns: void
+	effects: changes the contents of the array to have empty seats and no	                 price
+
+command
+	purpose: read in a command from the user and call the correct function                   and loop until the user quits
+	arguments: 2D array of struct, number of elements
+	returns: void
+	effects: does not modify the array
+	notes: input must be a valid command
+
+print
+	purpose: prints out the array
+	arguments: 2D array of struct, number of elements
+	returns: void
+	effects: does not modify the array
+	notes: array should be filled with things other than dead squirrels
+
+request
+	purpose:reads in a request and checks if it is a valid request and if so        calls the appropiate function based on price type
+	arguments: 2D array of struct, name, number of seats, price type
+	returns: void
+	effects: does not modify the array
+	notes: uses parameters of the array to check validity
+
+high
+	purpose: fills seats for people who requested type high, checks all rows        to try and find enough seats in a single row for the party before               putting them anywhere it can, prints back info on party
+	argumnets: 2D array of structs, number of seats requested, name
+	returns: void
+	effects: fills seats with name
+
+low
+	purpose: fills seats for people who requested type low, checks all rows         to try and find enough seats in a single row for the party before               putting them anywhere it can, prints back info on party
+	argumnets: 2D array of structs, number of seats requested, name
+	returns: void
+	effects: fills seats with name
+
+any
+	purpose: fills seats for people who requested type any, checks all rows         to try and find enough seats in a single row for the party before               putting them anywhere it can, checks expensive seats first, prints back         info on party
+	argumnets: 2D array of structs, number of seats requested, name
+	returns: void
+	effects: fills seats with name
+
+cancel
+	purpose: cancels a reservation by replacing seats with their name with          empty seats, tells you when its done, calls a function to double check          people who selected any to see if more money can be made
+	arguments: name, 2D array of structs
+	returns: void
+	effects: empties seats with name
+	notes: name must be reserved in order to cancel it
+
+check
+	purpose: finds the names of people who slected the any price type and           then re-calls the 'any' function to check if more money can be made
+	arguments: 2D array of structs, names found with price type any
+	returns: void
+	effect: does not change the array
+	notes: if no names are found doesn't call 'any' again
+

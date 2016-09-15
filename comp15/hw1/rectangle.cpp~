@@ -1,0 +1,62 @@
+// FILE: rectangle.cpp
+// CLASS: rectangle
+
+#include <iostream>
+#include "rectangle.h"
+
+using namespace std;
+
+rectangle::rectangle()
+{
+        
+}
+
+rectangle::rectangle(float side)
+{
+
+}
+
+rectangle::rectangle(float w, float h)
+{
+
+}
+
+float rectangle::getWidth()
+{
+        //STUB
+        return 0;
+}
+
+float rectangle::getHeight()
+{
+        //STUB
+        return 0;
+}
+
+void rectangle::setWidth(float w)
+{
+
+}
+
+void rectangle::setHeight(float h)
+{
+
+}
+
+float rectangle::perimeter()
+{
+        //STUB
+        return 0;
+}
+
+float rectangle::area()
+{
+        //STUB
+        return 0;
+}
+
+bool rectangle::isSquare()
+{
+        return true;
+}
+

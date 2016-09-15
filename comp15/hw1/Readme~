@@ -1,0 +1,19 @@
+hw1 Readme
+
+Name: James McCants
+Date: 1/20/14
+
+Purpose of Program:
+-Creates two rectangles using a rectangle class, one with user input
+-Tells the user information about the rectangles
+
+Files:
+        rectangle.h
+        -header file for the class containing the width and height
+
+        rectangle.cpp
+        -contains function definitions for rectangle class
+
+        rectangleTester.cpp
+        -creates two rectangles
+        -returns important info about them to the user

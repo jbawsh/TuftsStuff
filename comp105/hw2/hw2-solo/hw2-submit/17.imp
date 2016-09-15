@@ -1,0 +1,9 @@
+;; James McCants
+;;
+;; Hw2 problem 17
+
+(define check (c) ((set c 1)))
+
+(check c)
+
+(print c)

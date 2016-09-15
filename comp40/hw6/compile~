@@ -1,0 +1,95 @@
+#!/bin/sh
+
+set -e    # halt on first error
+
+link=all  # link all binaries by default
+linked=no # track whether we linked
+
+case $1 in  
+  -nolink) link=none ; shift ;;  # don't link
+  -link)   link="$2" ; shift ; shift ;;  # link only one binary
+esac
+
+# compile and link against CII40
+CIIFLAGS=`pkg-config --cflags cii40`
+CIILIBS=`pkg-config --libs cii40`
+
+# compile and link against course software and netpbm library
+CFLAGS="-I. -I/comp/40/include $CIIFLAGS"
+LIBS="$CIILIBS -l40locality -lbitpack -lnetpbm -lm -larith40"
+LFLAGS="-L/comp/40/lib64"
+
+# these flags max out warnings and debug info
+FLAGS="-g -O2 -Wall -Wextra -Werror -Wfatal-errors -std=c99 -pedantic"
+
+rm -f *.o  # make sure no object files are left hanging around
+
+case $# in
+  0) set *.c ;; # if no args are given, compile all .c files
+esac
+
+# compile each argument to a .o file
+for cfile 
+do
+  gcc $FLAGS $CFLAGS -c $cfile
+done
+
+########### the middle part is different for each assignment
+# link together .o files + libraries to make executable binaries
+# using one case statement per executable binary
+#case $link in
+# all|bptest) gcc $FLAGS -o bptest bptest.o bitpack.o\
+#                  $LIBS $LFLAGS 
+ #             linked=yes ;;
+#esac
+
+#case $link in
+#  all|rgb_to_comp_test) gcc $FLAGS -o rgb_to_comp_test rgb_to_comp_test.o\
+#       rgb_to_comp.o a2plain.o uarray2.o a2blocked.o uarray2b.o\
+#        compress_pix_block.o scale_and_unscale.o pack_and_unpack.o\
+#        bitpack.o\
+#                  $LIBS $LFLAGS 
+#              linked=yes ;;
+#esac
+#case $nolink in
+#   all|segment) gcc $FLAGS -c segment.o\
+#  $LIBS $LFLAGS
+#	linked=no ;;
+#esac     
+
+#case $link in
+#   all|mem_tests) gcc $FLAGS -o mem_tests mem_tests.o segment.o\
+# $LIBS $LFLAGS
+#	linked=yes ;;
+#esac    
+
+case $link in
+   all|um_tests) gcc $FLAGS -o um_test umlab.o umlabwrite.o\
+ $LIBS $CIILIBS $CFLAGS $LFLAGS
+	linked=yes ;;
+esac       
+
+case $link in
+   all|um) gcc $FLAGS -o um um.o segment.o decoder.o operations.o\
+ $LIBS $CIILIBS $CFLAGS $LFLAGS
+	linked=yes ;;
+esac       
+
+
+
+#case $link in
+#  all|40image-6) gcc $FLAGS -o 40image-6 40image.o\
+#        rgb_to_comp.o a2plain.o uarray2.o a2blocked.o uarray2b.o\
+#        compress_pix_block.o scale_and_unscale.o pack_and_unpack.o\
+#        bitpack.o comp_and_decomp.o\
+#                  $LIBS $LFLAGS 
+#              linked=yes ;;
+#esac
+
+# error if asked to link something we didn't recognize
+if [ $linked = no ]; then
+  case $link in  # if the -link option makes no sense, complain 
+    none) ;; # OK, do nothing
+    *) echo "`basename $0`: don't know how to link $link" 1>&2 ; exit 1 ;;
+  esac
+fi

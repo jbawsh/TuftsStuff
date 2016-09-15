@@ -1,0 +1,17 @@
+// callmain.ums
+//
+// James McCants and Jun Soo Shin
+//
+// Prints out binary numbers in decimal.
+
+.zero r0
+.temps r6, r7
+
+// Call main
+.section init
+         goto run linking r1
+
+// Ends the program
+.section text
+end_prog:
+        halt

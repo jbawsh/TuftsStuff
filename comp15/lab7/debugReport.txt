@@ -1,0 +1,24 @@
+Debug Report Lab 7
+
+James McCants
+
+1. The first bug was in dDA-1 schedule event. The program wasn't scheduling the
+ event if it was after all of the other events.
+
+2. Bug was in dDA-1 resizeList. They were missing the brackets before eventList
+when deleting it.
+
+3. The return statement happened right after the first event was moved so it had
+to be moved outside of the for loop.
+
+4. When canceling an event the student didn't decriment eventCount.
+
+5. In dDA-2 they didn't resize the list if eventCount caught up with event
+Capacity.
+
+6. There is something duplicating events but I don't know what.
+
+7. In cancel they didn't move all of the events over after the one cancelled.
+
+8. Didn't account for events with the same start time that wouldn't be caught
+by the amIBefore function.

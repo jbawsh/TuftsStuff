@@ -1,0 +1,57 @@
+This is bomb 16 for lab comp40fall14.
+
+It is owned by the following student(s):
+James.McCants@tufts.edu
+junsoo.shin@tufts.edu
+
+README
+HW5: bomb
+James McCants and Jun Soo Shin
+bomb16
+
+----- Help -----
+We received help from a few comp 40 TA's.
+
+----- Explanations -----
+
+phase_1 reads a string input and calls the helper function strings_not_equal 
+to check if the input is equal to the set input in the phase_1. It explodes the
+bomb if those strings are not equal; otherwise it returns and phase_defused is
+called by main.
+
+phase_2 reads six integers separated by a space by calling the helper function 
+read_six_numbers. read_six_numbers returns an array of those six integers. In 
+a for loop, phase_2 checks if each element of the array is 5 less than the next
+element. It exlodes the bomb if any one element is not 5 less than the next 
+element; otherwise, it returns and phase_defused is called by main.
+
+phase_3 uses fscanf to read a string input of two integers separated by a space.
+fscanf returns the integer and the integer. In a switch statement of 9 cases 
+including the default, the first integer is used as the case for the switch. 
+If the second integer matches the value in the corresponding case, phase_3 
+returns and phase_defused is called by main. Otherwise, the bomb will blow up. 
+The default case also blows up the bomb.
+
+phase_4 uses fscanf to read an integer. It uses the recursive helper function
+func4, which multiplies the integer integer-times (x^x) and returns the result. 
+If the result value is equal to 823543, which is 7^7 so if the integer input 
+is equal to 7, phase_4 returns and phase_defused is called by main; otherwise, 
+it explodes the bomb.  
+
+phase_5 uses fscanf to read a string of characters. It calls the helper function
+string_length to check if the length of the string input is six; if not, the
+bomb blows up. Then it loops through the string grabbing each character. It
+bitwise-ands the character with 15 and uses that value to index into a given
+array. The value at that index of the array is stored in a total. Once the loop
+ends, it checks if the total is equal to 32. If not, the bomb blows up;
+otherwise, it returns and defuses the bomb. 
+
+phase_6 uses strtol to read a string input and convert it into a long integer.
+It initializes an array of 9 pointers to 9 long integers. It calls the helper
+function fun6 to insertion sort the long integers in a descending order. If
+the long integer to which the last element of the array points (the smallest
+long integer) is not equal to the input value (142), then the bomb blows up; 
+otherwise it returns and defuses the bomb.  
+
+----- Hours -----
+12 hours

@@ -1,0 +1,61 @@
+Title         : Hofs Theory
+Subtitle      : COMP105 Fall 2015
+Author        : James McCants
+
+Comment: These parameters govern typesetting of code and formulas
+~Pre        : css-padding-left=0em
+~Math-Inline: input=mathpre
+
+[TITLE]
+
+<!-- MathDefs allows us to define some useful commands for formatting
+     inference rules -->
+
+~ MathDefs
+\newcommand{\state}[1]{\langle #1 \rangle}
+\newcommand{\inference}[2]{\dfrac{#1}{#2}}
+\newcommand{\yields}[0]{\Downarrow}
+~
+
+## Problem M {-}
+
+Using calculational proof, prove that: 
+
+(o ((curry map) f) ((curry map) g)) == ((curry map) (o f g))
+
+Given:
+
+	((o f g) x) == (f (g x))              ; apply-compose law
+	(((curry f) x) y) == (f x y)          ; apply-curried law
+
+If they are equal they will return the same thing when called on a list ys.
+
+### Proof {-}
+
+((o ((curry map) f) ((curry map) g)) ys)
+
+	= {apply-compose law}
+
+((((curry map) f) (((curry map) g) ys)))
+
+	= {apply-curried law}
+
+(map f ((curry map) g) ys)
+
+	= {apply-curried law}
+
+(map f (map g ys))
+
+	= {apply-compose law}
+
+(map (o f g) ys)
+
+	= {apply-curried law}
+
+(((curry map) (o f g)) ys)
+
+### Conclusion {-}
+
+This is the same as the right side when called on ys so:
+
+(o ((curry map) f) ((curry map) g)) == ((curry map) (o f g))

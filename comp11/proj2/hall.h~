@@ -1,0 +1,56 @@
+// size of seating area
+const int          ROWS = 14;
+const int SEATS_PER_ROW = 20;
+
+// size of high price area
+const int HIGH_SEAT_START = 4;
+const int HIGH_SEAT_END   = 15;
+const int HIGH_ROW_END    = 8;
+
+// prices
+const double HIGH_PRICE = 200.00;
+const double LOW_PRICE  = 150.00;
+const double DISCOUNT   = 0.9;
+
+// days
+const int EVENTS = 7;
+
+class Hall
+{
+ public:
+        Hall();
+        bool request(string name, int num, string type, int day);
+        bool cancel(string name);
+        void print();
+
+ private:
+        // Definition of a seat
+        struct seat_info
+        {
+                string name;
+                double price;
+                char row_letter;
+                int seat_num;
+                bool filled;
+                bool discount;
+        };
+        // Definiton of array
+        seat_info chart[ROWS][SEATS_PER_ROW];
+
+        // Operations
+        bool hi_consec   (string custID, int seats_rq, int day);
+        bool hi_non      (string custID, int seats_rq, int day);
+        bool lo_consec_l (string custID, int seats_rq, int day);
+        bool lo_consec_r (string custID, int seats_rq, int day);
+        bool lo_consec_b (string custID, int seats_rq, int day);
+        bool lo_non_avail(string custID, int seats_rq, int day);
+        void lo_non_fill (string custID, int seats_rq, int day);
+        bool any_avail   (string custID, int seats_rq, int day);
+        void any_non_fill(string custID, int seats_rq, int day);
+        bool any_consec  (string custID, int seats_rq, int day);
+        
+        // Utilities
+        void process_rq  ();
+        void report_order(string custID, int day);
+        bool check_ID    (string custID);
+};

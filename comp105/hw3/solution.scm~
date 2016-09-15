@@ -1,0 +1,223 @@
+;;James McCants
+;;
+;;solution.scm
+;;
+;;Comp105 - uscheme - hw3
+;;10/7/15
+
+
+;;2.a
+;;
+;;Returns the number of top-level elements in xs that are equal to x
+(define count (x xs)
+  (if (null? xs) 
+      0
+      (if (equal? x (car xs))
+          (+ 1 (count x (cdr xs)))
+          (+ 0 (count x (cdr xs))))))
+
+
+;;(count 'a '(1 b a (c a)))
+
+;;(check-expect (count 'a '(1 b a (c a))) 1)
+
+(check-expect (count '() '(() a ())) 2)
+
+;;2.b
+;;
+;;Returns the total number of elements in xs that are equal to x, not just
+;;top-level elements
+(define countall (x xs)
+  (if (null? xs) 
+      0
+      (if (equal? x (car xs))
+          (+ 1 (countall x (cdr xs)))
+          (if (atom? (car xs))
+              (+ 0 (countall x (cdr xs)))
+              (+ 0 (countall x (car xs)))))))
+
+
+;(countall 'a '(1 b a (c a)))
+
+;;2.c
+;;
+;;Returns a list in which every list in xs is recursively mirrored, and the
+;;resulting lists are in reverse order - see pg.170 2.(c)
+(define mirror (xs)
+  (if (null? xs)
+      xs
+      (if (atom? (car xs))
+          (append (mirror (cdr xs)) (list1 (car xs)))
+          (append (mirror (cdr xs)) (list1 (mirror (car xs)))))))
+
+
+;(mirror '(1 2 3 4 5))
+
+;(mirror '((a (b 5)) (c d) e))
+
+;;2.d
+;;
+;;Returns the list xs with all internal parens removed
+(define flatten (xs)
+  (if (null? xs)
+      xs
+      (if (atom? xs)
+          (list1 xs)
+          (append (flatten (car xs)) (flatten (cdr xs))))))
+
+
+;(flatten '((I (Ching Kong)) (U Thant) (E Coli)))
+
+;(flatten '((((a)))))
+
+;(flatten '(() (a b (c))))
+
+;;2.e
+;;
+;;Returns true if the first len(xs) elements of ys are equal to xs
+(define same-vals? (xs ys)
+  (if (null? xs)
+      #t
+      (if (equal? (car xs) (car ys))
+          (same-vals? (cdr xs) (cdr ys))
+          #f)))
+
+;;Returns true if xs is a contiguous sublist of ys
+(define contig-sublist? (xs ys)
+  (if (equal? (car xs) (car ys))
+      (same-vals? xs ys)
+      (contig-sublist? xs (cdr ys))))
+
+
+;(contig-sublist? '(a b c) '(x a y b z c))
+
+;;2.f
+;;
+;;Returns true if the list xs is a mathematical subsequence of the list ys
+(define sublist? (xs ys)
+  (if (null? xs)
+      #t
+      (if (null? ys)
+          #f
+          (if (equal? (car xs) (car ys))
+              (sublist? (cdr xs) (cdr ys))
+              (sublist? xs (cdr ys))))))
+
+
+;;6
+;;
+;;Returns true if x is an even number
+(define even? (x) (= (mod x 2) 0))
+
+;;Returns the longest prefix of xs where every element of xs satisfies pre?
+(define takewhile (pre? xs)
+  (if (pre? (car xs))
+      (cons (car xs) (takewhile pre? (cdr xs)))
+      '()))
+
+;;Removes the longest prefix of xs where every element of xs satisfies pre?
+;;and returns whatever is left over
+(define dropwhile (pre? xs)
+  (if (pre? (car xs))
+      (dropwhile pre? (cdr xs))
+      (append xs '())))
+
+
+;;15
+;;
+;;The function uses let to set the meaning of + to * and the meaning of * to +.
+;;Let creates locally bound variables whose values have no effect on one another
+;;so both declarations are independent of eachother. The final line is basically
+;;(sqrt (+ (* x x) (* y y))).
+
+
+;;A
+;;
+;;Returns the longest prefix of xs that contains at most n elements
+(define take (n xs)
+  (if (!= n 0)
+      (if (null? xs)
+          xs
+          (cons (car xs) (take (- n 1) (cdr xs))))
+      '()))
+
+;;Removes up to n elements from the front of xs and returns whatever is left
+;;over
+(define drop (n xs)
+  (if (!= n 0)
+      (if (null? xs)
+          xs
+          (drop (- n 1) (cdr xs)))
+      (append xs '())))
+
+
+;;B
+;;
+;;Returns an association list made out of lists xs and ys
+(define zip (xs ys)
+  (if (null? xs)
+      xs
+      (cons (list2 (car xs) (car ys)) (zip (cdr xs) (cdr ys)))))
+
+;;Returns the first list out of the association list xs
+(define build-one (xs)
+  (if (null? xs)
+      xs
+      (cons (caar xs) (build-one (cdr xs)))))
+
+;;Returns the second list out of the association list xs
+(define build-two (xs)
+  (if (null? xs)
+      xs
+      (cons (cadar xs) (build-two (cdr xs)))))
+
+;;Returns a pair of lists parsed from the association list xs
+(define unzip (xs)
+  (if (null? xs)
+      xs      (list2 (build-one xs) (build-two xs))))
+
+
+;;C
+;;
+;;Returns a^2
+(define square (a) (* a a))
+
+;;Returns 1000/a
+(define invert (a) (/ 1000 a))
+
+;;Returns the element of a for which (f a) is largest
+(define arg-max (f a)
+  (if (null? a)
+      1
+      (if (> (f (car a)) (f (arg-max f (cdr a))))
+          (car a)
+          (arg-max f (cdr a)))))
+
+
+;;D
+;;
+;(define successors-map-of-edge-list
+
+
+;;E
+;;
+;;Returns a single sorted list the same length as xs and ys together
+(define merge (xs ys)
+  (if (null? xs)
+      (append ys '())
+      (if (null? ys)
+          (append xs '())
+          (if (> (car xs) (car ys))
+              (cons (car ys) (merge (cdr ys) xs))
+              (cons (car xs) (merge (cdr xs) ys))))))
+
+;;F
+;;
+;;Returns a single list of alternating elements from lists xs and ys until one
+;;ends and then the rest of the second list is appended on
+(define interleave (xs ys)
+  (if (null? xs)
+      (append ys '())
+      (if (null? ys)
+          (append xs '())
+          (cons (car xs) (cons (car ys) (interleave (cdr xs) (cdr ys)))))))

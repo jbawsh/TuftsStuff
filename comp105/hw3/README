@@ -1,0 +1,25 @@
+James McCants
+
+README
+Comp105 - hw3 - uscheme
+
+
+-I worked a little bit with Aaron Bowen and Thomas Schaffner
+
+-I solved all the problems except the graphs in D, I didn't get them to work
+so the functions just return.
+
+-Form - Exemplary
+
+-Documentation - Satisfactory, I'm not sure if I'm missing things
+
+-Naming - Exemplary, all names are from prompts or make sense
+
+-Structure - Exemplary, code is clear and uses #t and #f
+
+-Cost - Exemplary
+
+-Correctness - I think everything is working except for D, Satisfactory
+(except for D)
+
+-I spent 13 hours on this assignment

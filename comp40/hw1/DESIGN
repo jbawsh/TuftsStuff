@@ -1,0 +1,37 @@
+/*    DESIGN
+ *    by Jun Soo Shin, James McCants, 9/8/14
+ *    HW 1: Intro
+ *
+ *    This is our design document.
+ */
+
+------Architecture-----
+
+We will use a Table ADS to store fingerprints and their corresponding names.
+The fingerprints will be stored in Atoms and those Atoms will be keys for the
+table. The names will be stored in sets of Atoms as the value of the table.
+We will call Table_toArray to cycle through and print out the fingerprints.
+
+-----Invariant-----
+
+All input lines before the current input line have been stored within the Table
+with fingerprints as keys and names as values. Incorrect input has been
+discarded.
+If no whitespace has been read yet in the current line, it is within a 
+fingerprint. If no non-whitespace characters after the first whitespace have 
+been entered, it is in between a fingerprint and a name. If a non-whitespace, 
+non-endline character has been read after the first whitespace, it is within a
+name. This rule holds for all lines until EOF.
+
+-----Implementation-----
+
+Every fingerprint is referenced by an atom. That atom is then used as a key in
+the Table and then the name associated with that fingerprint is added to the
+corresponding value, in the key-value pair, which is a set. We will use
+Table_toArray to create an array that we can iterate through to print. If a set
+has only one value, then we don't print it because that is not a proper 
+fingerprint group. The print function will cycle through each value set in the 
+table_array to print out the fingerprint groups.
+The void pointers used as keys for the table point to atoms. The void pointers
+used as values point to sets. The void pointers in the sets that are values will
+point to character arrays (names).
